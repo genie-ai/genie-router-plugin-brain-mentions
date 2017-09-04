@@ -1,0 +1,33 @@
+{
+  "name": "genie-router-plugin-brain-mentions",
+  "version": "1.0.0",
+  "description": "A genie router brain selector that selects a brain if its name is mentioned in the first words of an input. ",
+  "main": "index.js",
+  "scripts": {
+    "test": "standard",
+	"standard-fix": "standard --fix"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/matueranet/genie-router-plugin-brain-mentions.git"
+  },
+  "keywords": [
+    "genie-router",
+    "plugin",
+    "superplug",
+    "ai",
+    "brain"
+  ],
+  "author": "matueranet",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/matueranet/genie-router-plugin-brain-mentions/issues"
+  },
+  "homepage": "https://github.com/matueranet/genie-router-plugin-brain-mentions#readme",
+  "devDependencies": {
+    "standard": "^10.0.3"
+  },
+  "genieRouterPlugin": {
+    "name": "brain-mentions"
+  }
+}
