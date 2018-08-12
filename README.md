@@ -10,9 +10,16 @@ For example you can configure the plugin to recognize your custom _api.ai_ agent
 **Sam**: _Ask sam what is the current weather._ This will result into the input _what is the current
 weather_ to api.ai.
 
+# Installation
+
+To install go to the `.genie-router` folder in your home folder (or custom configured folder) and type:
+
+	npm install --save @genie-ai/genie-router-plugin-brain mentions`
+
 # Configuration
 
-To enable the plugin add the configuration key for the plugin: `brain-mentions`.
+To enable the plugin add the configuration key for the plugin: `brain-mentions` to the `config.json` of
+_genie-router_.
 
 ## Options
 

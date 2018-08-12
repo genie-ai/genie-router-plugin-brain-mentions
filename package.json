@@ -17,6 +17,9 @@
     "ai",
     "brain"
   ],
+  "engines": {
+    "node": ">=8.10"
+  },
   "author": "matueranet",
   "license": "MIT",
   "bugs": {
