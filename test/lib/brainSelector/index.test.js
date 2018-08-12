@@ -1,140 +1,119 @@
 /* global describe, it, beforeEach */
-const assert = require('assert')
-const decache = require('decache')
+const assert = require('assert');
+const decache = require('decache');
 
-describe('brainSelector', function () {
-  let brainSelector = null
+describe('brainSelector', () => {
+    let brainSelector = null;
 
-  beforeEach(function () {
-    decache('../../../lib/brainSelector') // Uncache brainSelector, for config values reset
-    brainSelector = require('../../../lib/brainSelector')
-  })
+    beforeEach(() => {
+        decache('../../../lib/brainSelector'); // Uncache brainSelector, for config values reset
+        brainSelector = require('../../../lib/brainSelector'); // eslint-disable-line global-require
+    });
 
-  it('should be an object with a start() function', function () {
-    assert.ok(typeof brainSelector.start === 'function')
-  })
+    it('should be an object with a start() function', () => {
+        assert.ok(typeof brainSelector.start === 'function');
+    });
 
-  it('start() should return a promise', function () {
-    let result = brainSelector.start({})
+    it('start() should return a promise', () => {
+        const result = brainSelector.start({});
 
-    assert.ok(typeof result.then === 'function')
-    assert.ok(typeof result.catch === 'function')
-  })
+        assert.ok(typeof result.then === 'function');
+        assert.ok(typeof result.catch === 'function');
+    });
 
-  it('should set default config values', function () {
-    return brainSelector.start({})
-      .then(function () {
-        let config = brainSelector.getConfig()
-
-        // the default values
-        assert.equal(3, config.partsOfInputToCheck)
-        assert.equal(0, Object.keys(config.aliases).length)
-      })
-      .catch(function (err) {
-        throw new Error('No catch expected in promise: ' + err.message)
-      })
-  })
-
-  it('should set the config values', function () {
-    return brainSelector.start({aliases: {exampleBrain: true}, partsOfInputToCheck: 4})
-      .then(function () {
-        let config = brainSelector.getConfig()
+    it('should set default config values', async () => {
+        await brainSelector.start({});
+        const config = brainSelector.getConfig();
 
         // the default values
-        assert.equal(4, config.partsOfInputToCheck)
-        assert.deepEqual({exampleBrain: true}, config.aliases)
-      })
-      .catch(function (err) {
-        throw new Error('No catch expected in promise: ' + err.message)
-      })
-  })
+        assert.equal(3, config.partsOfInputToCheck);
+        assert.equal(0, Object.keys(config.aliases).length);
+    });
 
-  it('should not accept invalid config values', function () {
-    let testdata = [
-     {aliases: 'string', partsOfInputToCheck: '4'},
-     {aliases: []},
-     {aliases: true}
-    ]
-    testdata.forEach(function (data) {
-      decache('../../../lib/brainSelector') // Uncache brainSelector, for config values reset
-      const brainSelector = require('../../../lib/brainSelector')
-      brainSelector.start(data)
-      .then(function () {
-        let config = brainSelector.getConfig()
+    it('should set the config values', async () => {
+        await brainSelector.start({ aliases: { exampleBrain: true }, partsOfInputToCheck: 4 });
+        const config = brainSelector.getConfig();
 
         // the default values
-        assert.equal(3, config.partsOfInputToCheck)
-        assert.deepEqual({}, config.aliases)
-      })
-      .catch(function (err) {
-        throw new Error('No catch expected in promise: ' + err.message)
-      })
-    })
-  })
+        assert.equal(4, config.partsOfInputToCheck);
+        assert.deepEqual({ exampleBrain: true }, config.aliases);
+    });
 
-  it('should detect the brain in these sentences', function () {
-    let brains = {mybrain: 'mybrain', yourbrain: 'yourbrain'}
-    let inputs = [
-      ['ask mybrain what is the weather', 'mybrain', 'what is the weather'],
-      ['yourbrain i want more info', 'yourbrain', 'i want more info'],
-      ['frage mybrain was ist das Wetter?', 'mybrain', 'was ist das Wetter?'],
-      ['vraag yourbrain een slimme vraag', 'yourbrain', 'een slimme vraag']
-    ]
+    it('should not accept invalid config values', () => {
+        const testdata = [
+            { aliases: 'string', partsOfInputToCheck: '4' },
+            { aliases: [] },
+            { aliases: true },
+        ];
+        testdata.forEach(async (data) => {
+            decache('../../../lib/brainSelector'); // Uncache brainSelector, for config values reset
+            const localBrainSelector = require('../../../lib/brainSelector'); // eslint-disable-line global-require
+            await localBrainSelector.start(data);
 
-    let promises = []
-    brainSelector.start({})
-      .then(function (selector) {
-        inputs.forEach(function (input) {
-          promises.push(
-            selector(brains, {message: {input: input[0]}})
-              .then(function (result) {
-                assert.equal(input[1], result.brain)
-                assert.equal(input[2], result.input.message.input)
-              })
-          )
-        })
-      })
+            const config = brainSelector.getConfig();
 
-    return Promise.all(promises)
-  })
+            // the default values
+            assert.equal(3, config.partsOfInputToCheck);
+            assert.deepEqual({}, config.aliases);
+        });
+    });
 
-  it('should detect an alias in these sentences', function () {
-    let brains = {mybrain: 'mybrain', yourbrain: 'yourbrain'}
-    let inputs = [
-      ['ask charlie what is the weather', 'mybrain', 'what is the weather'],
-      ['chuck i want more info', 'yourbrain', 'i want more info'],
-      ['frage charlie was ist das Wetter?', 'mybrain', 'was ist das Wetter?'],
-      ['vraag chuck een slimme vraag', 'yourbrain', 'een slimme vraag']
-    ]
+    it('should detect the brain in these sentences', async () => {
+        const brains = { mybrain: 'mybrain', yourbrain: 'yourbrain' };
+        const inputs = [
+            ['ask mybrain what is the weather', 'mybrain', 'what is the weather'],
+            ['yourbrain i want more info', 'yourbrain', 'i want more info'],
+            ['frage mybrain was ist das Wetter?', 'mybrain', 'was ist das Wetter?'],
+            ['vraag yourbrain een slimme vraag', 'yourbrain', 'een slimme vraag'],
+        ];
 
-    let promises = []
+        const promises = [];
+        const selector = await brainSelector.start({});
+        inputs.forEach((input) => {
+            promises.push(
+                selector(brains, { message: { input: input[0] } })
+                    .then((result) => {
+                        assert.equal(input[1], result.brain);
+                        assert.equal(input[2], result.input.message.input);
+                    }),
+            );
+        });
 
-    brainSelector.start({aliases: {charlie: 'mybrain', chuck: 'yourbrain'}})
-      .then(function (selector) {
-        inputs.forEach(function (input) {
-          promises.push(
-            selector(brains, {message: {input: input[0]}})
-              .then(function (result) {
-                assert.equal(input[1], result.brain)
-                assert.equal(input[2], result.input.message.input)
-              })
-            )
-        })
-      })
+        return Promise.all(promises);
+    });
 
-    return Promise.all(promises)
-  })
+    it('should detect an alias in these sentences', async () => {
+        const brains = { mybrain: 'mybrain', yourbrain: 'yourbrain' };
+        const inputs = [
+            ['ask charlie what is the weather', 'mybrain', 'what is the weather'],
+            ['chuck i want more info', 'yourbrain', 'i want more info'],
+            ['frage charlie was ist das Wetter?', 'mybrain', 'was ist das Wetter?'],
+            ['vraag chuck een slimme vraag', 'yourbrain', 'een slimme vraag'],
+        ];
 
-  it('should reject the promise when no match is found.', function () {
-    return brainSelector.start({})
-      .then(function (selector) {
-        selector([], {message: {input: 'there is not going to be a match here'}})
-          .then(function (result) {
-            assert.ok(false, 'Not supposed to get here')
-          })
-          .catch(function (err) {
-            assert.equal('No brain or alias match.', err.message)
-          })
-      })
-  })
-})
+        const promises = [];
+
+        const selector = await brainSelector.start({ aliases: { charlie: 'mybrain', chuck: 'yourbrain' } });
+        inputs.forEach((input) => {
+            promises.push(
+                selector(brains, { message: { input: input[0] } })
+                    .then((result) => {
+                        assert.equal(input[1], result.brain);
+                        assert.equal(input[2], result.input.message.input);
+                    }),
+            );
+        });
+
+        return Promise.all(promises);
+    });
+
+    it('should reject the promise when no match is found.', async () => {
+        const selector = await brainSelector.start({});
+        try {
+            await selector([], { message: { input: 'there is not going to be a match here' } });
+            assert.ok(false, 'Not supposed to get here');
+        } catch (err) {
+            assert.equal('No brain or alias match.', err.message);
+        }
+    });
+});

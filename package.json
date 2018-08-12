@@ -1,15 +1,14 @@
 {
-  "name": "genie-router-plugin-brain-mentions",
-  "version": "1.0.0",
+  "name": "@genie-ai/genie-router-plugin-brain-mentions",
+  "version": "2.0.0",
   "description": "A genie router brain selector that selects a brain if its name is mentioned in the first words of an input. ",
   "main": "index.js",
   "scripts": {
-    "test": "standard && istanbul cover --include-all-sources true _mocha test/**/*.test.js -- -R spec",
-    "standard-fix": "standard --fix"
+    "test": "eslint .&& _mocha test/**/*.test.js"
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/matueranet/genie-router-plugin-brain-mentions.git"
+    "url": "git+https://github.com/genie-ai/genie-router-plugin-brain-mentions.git"
   },
   "keywords": [
     "genie-router",
@@ -21,18 +20,21 @@
   "author": "matueranet",
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/matueranet/genie-router-plugin-brain-mentions/issues"
+    "url": "https://github.com/genie-ai/genie-router-plugin-brain-mentions/issues"
   },
-  "homepage": "https://github.com/matueranet/genie-router-plugin-brain-mentions#readme",
+  "homepage": "https://github.com/genie-ai/genie-router-plugin-brain-mentions#readme",
   "devDependencies": {
     "decache": "^4.1.0",
-    "istanbul": "^0.4.5",
-    "mocha": "^3.4.2"
-  },
-  "genieRouterPlugin": {
-    "name": "brain-mentions"
+    "mocha": "^5.2.0",
+    "eslint": "^4.19.1",
+    "eslint-config-airbnb-base": "^13.0.0",
+    "eslint-plugin-import": "^2.9.0"
   },
   "dependencies": {
     "debug": "^3.0.1"
+  },
+  "genieRouterPlugin": {
+    "name": "brain-mentions",
+    "apiVersion": "1.0.0"
   }
 }

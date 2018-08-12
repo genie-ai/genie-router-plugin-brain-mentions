@@ -1,5 +1,5 @@
-const brainSelector = require('./lib/brainSelector')
+const brainSelector = require('./lib/brainSelector');
 
 module.exports = {
-  brainSelector: brainSelector
-}
+    brainSelector,
+};
