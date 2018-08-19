@@ -2,7 +2,7 @@
 
 A genie-router brain selector that selects a brain if its name is mentioned in the first words of an input.
 
-This is a plugin for the [https://github.com/matueranet/genie-router](genie-router)
+This is a plugin for the [https://github.com/genie-ai/genie-router](genie-router)
 project. It parses the input and scans the first words for a mentioning of a specific brain
 or a configured alias for a brain.
 
@@ -14,7 +14,7 @@ weather_ to api.ai.
 
 To install go to the `.genie-router` folder in your home folder (or custom configured folder) and type:
 
-	npm install --save @genie-ai/genie-router-plugin-brain mentions`
+	npm install --save @genie-ai/genie-router-plugin-brain-mentions`
 
 # Configuration
 
